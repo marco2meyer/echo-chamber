@@ -236,11 +236,14 @@ step_delay = st.sidebar.slider(
 default_outsider_trust = 0.1 # Define defaults here
 trust_threshold = 0.5
 initial_trust_setup = 'belief_based'
+initial_high_trust = 0.9 # Define default value BEFORE the if block
 
 if model_type == 'chamber':
     st.sidebar.markdown("--- Echo Chamber Settings ---")
     trust_threshold = st.sidebar.slider("Trust Threshold (for belief update)", 0.0, 1.0, 0.5, 0.05, key='trust_thresh_slider')
     default_outsider_trust = st.sidebar.slider("Default Trust for Unknown/Distrusted Agents", 0.0, 1.0, 0.1, 0.05, key='default_trust_slider')
+    # The slider will overwrite the default value if model is chamber
+    initial_high_trust = st.sidebar.slider("Initial High Trust Value (for Setup)", 0.0, 1.0, initial_high_trust, 0.05, key='high_trust_slider')
     initial_trust_setup = st.sidebar.selectbox(
         "Initial Trust Setup",
         ('belief_based', 'uniform_high'),
@@ -261,25 +264,12 @@ params = {
     'step_delay': step_delay,
     'trust_threshold': trust_threshold,
     'default_outsider_trust': default_outsider_trust,
+    'initial_high_trust': initial_high_trust,
     'initial_trust_setup': initial_trust_setup
 }
 
-# --- Main Layout with Columns for Network and Metrics ---
-col_network, col_metrics = st.columns([3, 2]) # Adjust ratio as needed (e.g., 2, 1)
-
-with col_network:
-    st.subheader("Network Visualization")
-    # Define placeholder for the network plot
-    vis_placeholder = st.empty()
-
-with col_metrics:
-    st.subheader("Simulation Metrics")
-    # Placeholders for current metrics
-    metrics_display_placeholder = st.empty()
-    # Placeholder for the metrics plot
-    metrics_plot_placeholder = st.empty()
-
-# --- Control Buttons (Placed below columns for better flow) ---
+# --- Define Control Buttons FIRST ---
+st.markdown("--- Controls ---")
 control_cols = st.columns(3)
 
 with control_cols[0]:
@@ -300,27 +290,12 @@ with control_cols[0]:
         st.session_state.metrics_history = [] # Reset metrics history
         st.success("Simulation Initialized/Reset!")
 
-        # Calculate and display initial metrics
+        # Calculate initial metrics (but don't display text here yet)
         sim_state = st.session_state.simulation_instance.get_simulation_state()
         current_metrics = st.session_state.simulation_instance.calculate_metrics()
         current_metrics['time_step'] = sim_state['time_step']
         st.session_state.metrics_history.append(current_metrics)
-        
-        # Display current metrics text (Updated)
-        group_A_avg_val = current_metrics['group_A_avg']
-        group_A_avg_display = f"{group_A_avg_val:.3f}" if group_A_avg_val is not None else "N/A"
-        group_B_avg_val = current_metrics['group_B_avg']
-        group_B_avg_display = f"{group_B_avg_val:.3f}" if group_B_avg_val is not None else "N/A"
-        
-        # Use fixed group names in text
-        metrics_text = f"""Overall Avg Belief: {current_metrics['avg_belief']:.3f}
-Overall Std Dev:    {current_metrics['std_dev_belief']:.3f}
----
-Group A (Initial <0.5): {current_metrics['group_A_count']} agents
-  Avg: {group_A_avg_display}, Std: {current_metrics['group_A_std']:.3f}
-Group B (Initial >=0.5): {current_metrics['group_B_count']} agents
-  Avg: {group_B_avg_display}, Std: {current_metrics['group_B_std']:.3f}"""
-        metrics_display_placeholder.markdown(f"```\n{metrics_text}\n```")
+        # Display text will happen in the main loop display section
 
 with control_cols[1]:
     if st.button("Start / Resume", key='start_button'):
@@ -334,6 +309,20 @@ with control_cols[2]:
     if st.button("Pause", key='pause_button'):
         st.session_state.running = False
         st.info("Simulation Paused.")
+
+st.markdown("--- Visualization & Metrics ---") # Add separator
+
+# --- Main Layout with Columns for Network and Metrics ---
+col_network, col_metrics = st.columns([3, 2])
+
+with col_network:
+    # st.subheader("Network Visualization") # Subheader less necessary now
+    vis_placeholder = st.empty()
+
+with col_metrics:
+    # st.subheader("Simulation Metrics") # Subheader less necessary now
+    metrics_display_placeholder = st.empty()
+    metrics_plot_placeholder = st.empty()
 
 # --- Simulation Loop (REVISED STRUCTURE 3 - Updated metrics display) ---
 if st.session_state.simulation_instance:

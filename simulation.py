@@ -25,6 +25,7 @@ class Simulation:
                 interaction_chance (float)
                 initial_trust_setup ('uniform_high', 'belief_based', for chamber)
                 step_delay (float)
+                initial_high_trust (float, for chamber belief_based setup)
         """
         self.params = params
         self.agents = {} # Dictionary {agent_id: Agent object}
@@ -87,12 +88,14 @@ class Simulation:
         setup_type = self.params.get('initial_trust_setup', 'uniform_high')
         trust_scores = {}
         default_trust = self.params.get('default_outsider_trust', 0.1)
-        high_trust_value = 0.9 # Example value for high trust
+        # Get high trust value from params, defaulting if not present
+        high_trust_value = self.params.get('initial_high_trust', 0.9) # Use param
 
         if setup_type == 'uniform_high':
+            # In uniform_high, *all* others get high trust initially
             for other_id in all_agent_ids:
                 if other_id != agent.id:
-                    trust_scores[other_id] = high_trust_value
+                    trust_scores[other_id] = high_trust_value 
         elif setup_type == 'belief_based':
              # Trust others more if their initial belief is similar
              belief_similarity_threshold = 0.3 # Example threshold
