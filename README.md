@@ -1,4 +1,4 @@
-\# Exploring Epistemic Bubbles and Echo Chambers — No Coding Experience Needed!
+# Exploring Epistemic Bubbles and Echo Chambers — No Coding Experience Needed!
 
 Welcome! This project lets you explore two important concepts from philosophy — **Epistemic Bubbles** and **Echo Chambers** — using an interactive simulation. You don't need any programming experience to use it. The simulation runs in your web browser, and you can change parameters and see what happens in real time.
 
@@ -46,7 +46,17 @@ This project uses a few extra Python tools. Install them by running:
 pip install -r requirements.txt
 ```
 
-### 6. Run the Simulation (Streamlit — Recommended)
+### 6. (Recommended) Install an IDE (Code Editor)
+While you can use any text editor to edit code, using an Integrated Development Environment (IDE) makes things much easier:
+- **[Visual Studio Code (VS Code)](https://code.visualstudio.com/):** Free, beginner-friendly, and works on Windows, Mac, and Linux.
+- **AI-powered versions of VS Code:**
+  - **[Windsurf](https://windsurf.ai/):** Free tier, built-in advanced AI coding assistant -- this is what I use.
+  - **[Cursor](https://www.cursor.so/):** Free tier, advanced AI coding support -- also a great choice.
+  - **[Cline](https://github.com/Clinet/cline):** Open source, supports many free AI models -- probably good but I've never tried.
+
+To install, just follow the instructions on their websites. These tools can help you write, understand, and fix code with the help of AI. If you ever want to try editing or extending the code, these editors make it much easier—and the AI can help you every step of the way!
+
+### 7. Run the Simulation (Streamlit — Recommended)
 Streamlit gives you a simple, friendly web interface.
 ```bash
 streamlit run streamlit_app.py
@@ -63,7 +73,7 @@ streamlit run streamlit_app.py
   - Start with: `streamlit run streamlit_app.py`
 
 - **Dash (Advanced):**
-  - More customizable, but a bit more complex.
+  - More customizable, and no flickering of the plot. But a bit more complex.
   - If you want to try it: `python dash_app.py`
   - Then open http://127.0.0.1:8050 in your browser.
 
@@ -88,17 +98,35 @@ If you want to peek under the hood or try extending the model, here’s where to
 - **`simulation.py`** — The simulation engine: how agents interact each step.
 - **`network_utils.py`** — How the network of agents is built.
 - **`visualization.py`** — How the network and results are visualized (using Plotly graphs).
-- **`streamlit_app.py`** — The Streamlit web interface (where the buttons and sliders live).
-- **`dash_app.py`** — The Dash web interface (alternative, more advanced).
+- **`streamlit_app.py`** — The Streamlit web interface (where the buttons and sliders live) For many updates to the code  you won't need to go there.
+- **`dash_app.py`** — The Dash web interface (alternative to streamlit dashboard, slightly more advanced programming).
 
 If you want to change how agents behave, start with `models.py` and `agent.py`.
 
 ---
 
-## Troubleshooting
-- If you get errors about missing packages, make sure you ran `pip install -r requirements.txt`.
-- If Python isn’t recognized, check that it’s installed and added to your PATH.
-- If you get stuck, ask your instructor or a classmate!
+## Troubleshooting & Using AI to Get Help
+- **Missing packages?** Make sure you ran `pip install -r requirements.txt` in your terminal.
+- **Python not recognized?** Check that Python is installed and added to your PATH (see Step 1 above).
+- **Confused by an error message?**
+  1. **Copy the error message.**
+  2. **Paste it into your AI assistant** and ask for help (see below).
+- **Want to try changing the code, but not sure how?**
+  - **Write your idea in plain English or pseudocode**, then ask your AI assistant to translate it into Python.
+  - Example: “I want agents to only update their belief if their neighbor’s belief is at least 0.2 different. How do I do this in `models.py`?” (then paste in all of the code from models.py)
+- **Where to get AI help:**
+  - If you’re using VS Code, Windsurf, Cursor, or Cline, you can highlight code or errors and ask the built-in AI assistant for help.
+  - You can also use web-based tools like [ChatGPT](https://chat.openai.com), [Gemini](https://gemini.google.com), or [Claude](https://claude.ai) to get explanations, translations into other programming languages, or debugging help.
+- **General tips:**
+  - If something breaks, don’t panic! AI assistants are great at translating error messages, fixing bugs, and even turning your pseudocode or ideas into real code.
+  - If you’re stuck, ask your instructor, a classmate, or an AI assistant—don’t struggle alone!
+
+**Example AI prompts:**
+- “I got this error: [paste error here]. What does it mean and how do I fix it?”
+- “Can you turn this pseudocode into Python?”
+- “Explain what this function does.”
+- “How do I add a new type of agent to this simulation?”
+- "I have some code here. How can I make it run? Explain step by step." 
 
 ---
 
