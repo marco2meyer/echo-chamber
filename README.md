@@ -1,73 +1,110 @@
-\# Agent-Based Model: Epistemic Bubbles vs. Echo Chambers
+\# Exploring Epistemic Bubbles and Echo Chambers — No Coding Experience Needed!
 
-This project implements a simple agent-based model (ABM) in Python to explore the conceptual distinction between Epistemic Bubbles and Echo Chambers, based on the work of C. Thi Nguyen.
+Welcome! This project lets you explore two important concepts from philosophy — **Epistemic Bubbles** and **Echo Chambers** — using an interactive simulation. You don't need any programming experience to use it. The simulation runs in your web browser, and you can change parameters and see what happens in real time.
 
-The simulation is presented using an interactive web application built with Streamlit.
+**What is this about?**
+- **Epistemic Bubble:** When people only hear from a limited set of sources, not because they distrust others, but simply because those voices are missing.
+- **Echo Chamber:** When people actively distrust and ignore information from outside their group, reinforcing their own views.
 
-## Core Concepts
+This project helps you see how these phenomena might work in a social network, using a simplified model.
 
-*   **Epistemic Bubble:** A situation where an individual's information sources are limited *by omission*. Certain relevant voices or perspectives are simply not included in their network, leading to an incomplete picture without necessarily involving active distrust.
-*   **Echo Chamber:** A situation where an individual actively distrusts sources outside their community. It's not just about missing information; it's about *discrediting* information from outside sources based on manipulated trust.
+---
 
-## Model Implementation
+## Quick Start: How to Run the Simulation (Step by Step)
 
-*   **Agents:** Each agent has a belief state (represented as a float between 0 and 1) and connections to other agents.
-*   **Network:** Agents are connected in a network (currently a random Erdős-Rényi graph, configurable by connection probability).
-*   **Interaction:** In each time step, a random agent potentially interacts with one of its neighbors. The interaction involves the sender sharing their belief state.
-*   **Belief Update:**
-    *   **Epistemic Bubble Model:** The receiving agent updates its belief slightly towards the sender's belief, *regardless* of the sender (as long as they are connected). The limitation comes purely from the network structure.
-    *   **Echo Chamber Model:** The receiving agent first checks its *trust* in the sender. If the sender's trust score is above a threshold, the receiver updates its belief towards the sender's. If the trust score is below the threshold, the message is ignored (actively discredited).
-*   **Trust (Echo Chamber):** Agents maintain trust scores for other agents. Initial trust can be set based on belief similarity or uniformly high. (Trust dynamics/updates during the simulation are currently placeholders).
+**You do NOT need to know how to code! Just follow these instructions:**
 
-## Files
+### 1. Install Python (if you don't have it yet)
+- Go to [python.org/downloads](https://www.python.org/downloads/) and download Python 3.8 or newer.
+- Install Python by opening the downloaded file and following the instructions. Make sure to check the box that says "Add Python to PATH" if asked.
 
-*   `simulation.py`: Contains the `Simulation` class (core engine).
-*   `agent.py`: Defines the `Agent` class.
-*   `models.py`: Implements the belief update logic (Bubble vs. Chamber).
-*   `network_utils.py`: Contains network generation logic.
-*   `visualization.py`: Contains functions to generate Plotly figures for network and metrics (UI-agnostic).
-*   `streamlit_app.py`: The Streamlit front-end application.
-*   `dash_app.py`: The Dash front-end application.
-*   `requirements.txt`: Lists the necessary Python libraries.
-*   `README.md`: This file.
+### 2. Download the Project Files
+- If you received this as a ZIP file, unzip it to a folder on your computer.
+- If you are using GitHub, click the green **Code** button and choose **Download ZIP**. Then unzip.
 
-## Setup and Running
+### 3. Open a Terminal (Command Prompt)
+- **Windows:** Press the Windows key, type `cmd`, and hit Enter.
+- **Mac:** Open `Terminal` from Applications > Utilities.
+- **Navigate** to the folder where you unzipped the project. For example, if you put it in Documents:
+  ```bash
+  cd "Documents/echo chamber"
+  ```
 
-1.  **Clone the repository (or ensure you have the files).**
-2.  **Create a virtual environment (recommended):**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate # On Windows use `venv\Scripts\activate`
-    ```
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-4.  **Run the desired application:**
-    *   **To run the Streamlit version:**
-        ```bash
-        streamlit run streamlit_app.py
-        ```
-    *   **To run the Dash version:**
-        ```bash
-        python dash_app.py
-        ```
-        Then, open your web browser and navigate to `http://127.0.0.1:8050/` (or the address indicated in the terminal).
+### 4. (Optional but Recommended) Create a Virtual Environment
+This keeps your Python packages organized.
+```bash
+python3 -m venv venv
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+```
 
-## Using the Applications
+### 5. Install the Required Packages
+This project uses a few extra Python tools. Install them by running:
+```bash
+pip install -r requirements.txt
+```
 
-Both applications provide similar controls in the sidebar for adjusting simulation parameters. 
+### 6. Run the Simulation (Streamlit — Recommended)
+Streamlit gives you a simple, friendly web interface.
+```bash
+streamlit run streamlit_app.py
+```
+- Your web browser should open automatically. If not, copy the link from the terminal (usually http://localhost:8501) and open it in your browser.
 
-*   **Streamlit App:** Uses `st.rerun` for updates, which may cause some visual flickering during simulation steps.
-*   **Dash App:** Uses callbacks and targeted updates, resulting in smoother visualization updates without full page redraws.
+---
 
-Use the **Setup / Reset**, **Start / Resume**, and **Pause** buttons to control the simulation in both versions.
+## Two Ways to Explore: Streamlit vs. Dash
 
-## Potential Extensions
+- **Streamlit (Recommended):**
+  - Easiest to use, especially for beginners.
+  - Simple interface, runs in your browser.
+  - Start with: `streamlit run streamlit_app.py`
 
-*   Implement more sophisticated network structures (e.g., scale-free, small-world, community structures).
-*   Add dynamic trust updates in the Echo Chamber model.
-*   Visualize trust relationships in the Echo Chamber model.
-*   Introduce different types of information or topics.
-*   Add more complex agent behaviors (e.g., selective exposure based on belief).
-*   Include metrics and plots to track polarization, average belief, etc., over time. 
+- **Dash (Advanced):**
+  - More customizable, but a bit more complex.
+  - If you want to try it: `python dash_app.py`
+  - Then open http://127.0.0.1:8050 in your browser.
+
+**Tip:** If you’re new, stick with Streamlit!
+
+---
+
+## What’s Happening in the Simulation?
+- You’ll see a network of “agents” (people) with lines showing who talks to whom.
+- You can choose between two models:
+  - **Epistemic Bubble:** Agents don’t hear from everyone, just their direct contacts.
+  - **Echo Chamber:** Agents may distrust and ignore some contacts, not just miss them.
+- Adjust parameters (like number of agents, connection probability, etc.) and watch how beliefs change over time!
+
+---
+
+## Where’s the Interesting Logic? (For the Curious)
+If you want to peek under the hood or try extending the model, here’s where to look:
+
+- **`models.py`** — The heart of the belief update logic (difference between Bubble and Chamber).
+- **`agent.py`** — Defines what each agent is and how it stores beliefs and trust.
+- **`simulation.py`** — The simulation engine: how agents interact each step.
+- **`network_utils.py`** — How the network of agents is built.
+- **`visualization.py`** — How the network and results are visualized (using Plotly graphs).
+- **`streamlit_app.py`** — The Streamlit web interface (where the buttons and sliders live).
+- **`dash_app.py`** — The Dash web interface (alternative, more advanced).
+
+If you want to change how agents behave, start with `models.py` and `agent.py`.
+
+---
+
+## Troubleshooting
+- If you get errors about missing packages, make sure you ran `pip install -r requirements.txt`.
+- If Python isn’t recognized, check that it’s installed and added to your PATH.
+- If you get stuck, ask your instructor or a classmate!
+
+---
+
+## More to Explore (Advanced)
+- Try changing the code in `models.py` to experiment with new update rules.
+- Add new types of agents or connections in `agent.py` or `network_utils.py`.
+- Visualize more metrics in `visualization.py`.
+
+Have fun exploring epistemic bubbles and echo chambers! No programming experience required — but you’re welcome to dive deeper if you’re curious.
