@@ -1,4 +1,4 @@
-# Exploring Epistemic Bubbles and Echo Chambers — No Coding Experience Needed!
+# Exploring Epistemic Bubbles and Echo Chambers
 
 Welcome! This project lets you explore two important concepts from philosophy — **Epistemic Bubbles** and **Echo Chambers** — using an interactive simulation. You don't need any programming experience to use it. The simulation runs in your web browser, and you can change parameters and see what happens in real time.
 
