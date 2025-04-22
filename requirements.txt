@@ -3,4 +3,8 @@ networkx
 matplotlib
 plotly
 numpy
-scipy 
+scipy
+pandas
+dash
+dash-bootstrap-components
+gunicorn 

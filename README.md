@@ -21,12 +21,15 @@ The simulation is presented using an interactive web application built with Stre
 
 ## Files
 
-*   `app.py`: The main Streamlit application file. Run this to start the simulation.
-*   `simulation.py`: Contains the `Simulation` class that manages the overall simulation state, setup, and stepping logic.
-*   `agent.py`: Defines the `Agent` class with its properties and methods.
-*   `models.py`: Implements the distinct belief update logic (`receive_message_bubble`, `receive_message_chamber`) for the two models.
-*   `network_utils.py`: Contains functions for creating the network structure (using `networkx`).
+*   `simulation.py`: Contains the `Simulation` class (core engine).
+*   `agent.py`: Defines the `Agent` class.
+*   `models.py`: Implements the belief update logic (Bubble vs. Chamber).
+*   `network_utils.py`: Contains network generation logic.
+*   `visualization.py`: Contains functions to generate Plotly figures for network and metrics (UI-agnostic).
+*   `streamlit_app.py`: The Streamlit front-end application.
+*   `dash_app.py`: The Dash front-end application.
 *   `requirements.txt`: Lists the necessary Python libraries.
+*   `README.md`: This file.
 
 ## Setup and Running
 
@@ -40,25 +43,25 @@ The simulation is presented using an interactive web application built with Stre
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Run the Streamlit app:**
-    ```bash
-    streamlit run app.py
-    ```
+4.  **Run the desired application:**
+    *   **To run the Streamlit version:**
+        ```bash
+        streamlit run streamlit_app.py
+        ```
+    *   **To run the Dash version:**
+        ```bash
+        python dash_app.py
+        ```
+        Then, open your web browser and navigate to `http://127.0.0.1:8050/` (or the address indicated in the terminal).
 
-This will open the interactive simulation in your web browser.
+## Using the Applications
 
-## Using the Application
+Both applications provide similar controls in the sidebar for adjusting simulation parameters. 
 
-1.  **Sidebar Parameters:** Adjust the simulation parameters in the sidebar:
-    *   Select the model type (Epistemic Bubble or Echo Chamber).
-    *   Set the number of agents and connection probability.
-    *   Choose the initial belief distribution (e.g., 'bimodal' often shows polarization effects).
-    *   Adjust the belief update step size and interaction chance.
-    *   If using the Echo Chamber model, configure trust-related parameters (threshold, default trust, initial setup).
-2.  **Setup/Reset:** Click the "Setup / Reset Simulation" button to initialize the simulation with the current parameters.
-3.  **Start/Resume:** Click "Start / Resume" to run the simulation step-by-step. The visualization will update automatically.
-4.  **Pause:** Click "Pause" to halt the simulation while keeping the current state.
-5.  **Visualization:** The main panel shows the network graph. Nodes represent agents, and their color indicates their belief state (e.g., blue towards 0, red towards 1). Edges show connections.
+*   **Streamlit App:** Uses `st.rerun` for updates, which may cause some visual flickering during simulation steps.
+*   **Dash App:** Uses callbacks and targeted updates, resulting in smoother visualization updates without full page redraws.
+
+Use the **Setup / Reset**, **Start / Resume**, and **Pause** buttons to control the simulation in both versions.
 
 ## Potential Extensions
 
